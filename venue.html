@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venue | TSRC 2026 - Faculty of Medicine, Tanta University</title>
+    <meta name="description" content="Conference venue location and directions for TSMRC 2026">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="venue.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">T</div>
+                <div class="logo-text">
+                    <span class="logo-title">TSRC 2026</span>
+                    <span class="logo-subtitle">Tanta University</span>
+                </div>
+            </a>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="agenda.html">Agenda</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="venue.html" class="active">Venue</a></li>
+            </ul>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="page-header-content">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>/</span>
+                <span>Venue</span>
+            </div>
+            <h1>Conference Venue</h1>
+            <p>Faculty of Medicine, Tanta University</p>
+        </div>
+    </section>
+
+    <!-- Main Venue Info -->
+    <section class="venue-main">
+        <div class="container">
+            <div class="venue-grid">
+                
+                <!-- Address Card -->
+                <div class="venue-card">
+                    <div class="venue-icon">
+                        <i class="fas fa-building-columns"></i>
+                    </div>
+                    <h2>📍 Faculty of Medicine</h2>
+                    <p class="venue-name">Tanta University</p>
+                    
+                    <div class="address-box">
+                        <i class="fas fa-map-pin"></i>
+                        <strong>El-Gaish Street (Al-Bahr St)</strong><br>
+                        Tanta, Gharbia Governorate, Egypt<br>
+                        Postal Code: 31527
+                    </div>
+
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+20 1110935358</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@tsrc.edu.eg</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-globe"></i>
+                            <span>med.tanta.edu.eg</span>
+                        </div>
+                    </div>
+
+                    <div class="coordinates">
+                        <small>
+                            <i class="fas fa-location-dot"></i>
+                            Coordinates: 30.7994° N, 31.0012° E
+                        </small>
+                    </div>
+                </div>
+
+                <!-- Map Card -->
+                <div class="venue-card map-card">
+                    <h2><i class="fas fa-map"></i> Find Us</h2>
+                    <p class="map-desc">Click below to open the location in Google Maps for navigation</p>
+                    
+                    <div class="map-placeholder">
+                        <i class="fas fa-map-location-dot"></i>
+                        <p>Faculty of Medicine<br>Tanta University</p>
+                    </div>
+                    
+                    <a href="https://maps.google.com/?q=Faculty+of+Medicine,+Tanta+University,+Egypt" 
+                       target="_blank" 
+                       class="btn-map">
+                        <i class="fas fa-external-link-alt"></i>
+                        Open in Google Maps
+                    </a>
+                    
+                    <p class="map-hint">
+                        <i class="fas fa-info-circle"></i>
+                        Search: "Faculty of Medicine Tanta University"
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Here Section -->
+    <section class="getting-here">
+        <div class="container">
+            <div class="section-header">
+                <h2>🚗 How to Get Here</h2>
+                <p>Transportation options to reach the Faculty of Medicine</p>
+            </div>
+
+            <!-- Transport Tabs -->
+            <div class="transport-tabs">
+                <button class="transport-tab active" data-tab="train">
+                    <i class="fas fa-train"></i>
+                    <span>By Train</span>
+                </button>
+                <button class="transport-tab" data-tab="car">
+                    <i class="fas fa-car"></i>
+                    <span>By Car/Taxi</span>
+                </button>
+                <button class="transport-tab" data-tab="bus">
+                    <i class="fas fa-bus"></i>
+                    <span>By Microbus</span>
+                </button>
+            </div>
+
+            <!-- Transport Content -->
+            <div class="transport-panels">
+                
+                <!-- Train Panel -->
+                <div class="transport-panel active" id="train-panel">
+                    <div class="transport-content">
+                        <h4><i class="fas fa-train"></i> Tanta Railway Station</h4>
+                        <p>Tanta is a major railway hub on the Cairo-Alexandria line.</p>
+                        <ul class="transport-list">
+                            <li><strong>From Cairo:</strong> ≈2 hours, trains every 1-2 hours</li>
+                            <li><strong>From Alexandria:</strong> ≈1.5 hours, direct trains available</li>
+                            <li><strong>Ticket Price:</strong> EGP 50-150 depending on class</li>
+                        </ul>
+                        <div class="directions-box">
+                            <strong>From Station to Venue (≈2 km):</strong>
+                            <ol>
+                                <li>Exit Tanta Main Station toward El-Gaish Street</li>
+                                <li>Take taxi from stand outside main entrance</li>
+                                <li>Request "Faculty of Medicine, El-Gaish Street"</li>
+                                <li>Journey: 5-10 minutes, fare ≈ EGP 30-50</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Car/Taxi Panel -->
+                <div class="transport-panel" id="car-panel">
+                    <div class="transport-content">
+                        <h4><i class="fas fa-car"></i> Driving to Tanta</h4>
+                        <p>Tanta is accessible via the Cairo-Alexandria Agricultural Road.</p>
+                        <ul class="transport-list">
+                            <li><strong>From Cairo:</strong> ≈120 km via Agricultural Road (≈1.5-2 hrs)</li>
+                            <li><strong>From Alexandria:</strong> ≈90 km via Desert Road (≈1-1.5 hrs)</li>
+                            <li><strong>Parking:</strong> Limited on-site; public parking on El-Gaish St</li>
+                            <li><strong>Traffic Tip:</strong> Allow extra time during rush hours</li>
+                        </ul>
+                        <div class="directions-box">
+                            <strong>GPS Coordinates:</strong><br>
+                            <code>30.7994° N, 31.0012° E</code><br><br>
+                            <small>Enter in your navigation app for direct routing</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Microbus Panel -->
+                <div class="transport-panel" id="bus-panel">
+                    <div class="transport-content">
+                        <h4><i class="fas fa-bus"></i> Public Transportation</h4>
+                        <p>Affordable microbus services connect Tanta with nearby cities.</p>
+                        <ul class="transport-list">
+                            <li><strong>Microbus Routes:</strong> Ask for "Al-Bahr" or "El-Gesh" lines</li>
+                            <li><strong>Bus Stations:</strong> Tanta Central Bus Station has intercity connections</li>
+                            <li><strong>Fare:</strong> EGP 10-30 from nearby cities</li>
+                            <li><strong>Tip:</strong> Show venue address to driver for assistance</li>
+                        </ul>
+                        <div class="directions-box">
+                            <strong>Getting to Venue:</strong>
+                            <ol>
+                                <li>Disembark at "El-Gaish Street" or "Medical Faculty" stop</li>
+                                <li>Look for Faculty main gate (blue university signage)</li>
+                                <li>Ask security for conference registration desk</li>
+                                <li>Walking time from main road: 2-3 minutes</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Tips -->
+    <section class="quick-tips">
+        <div class="container">
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <i class="fas fa-language"></i>
+                    <h4>Language</h4>
+                    <p>Arabic is primary. English understood in academic settings. Translation apps helpful.</p>
+                </div>
+                <div class="tip-card">
+                    <i class="fas fa-money-bill"></i>
+                    <h4>Currency</h4>
+                    <p>Egyptian Pound (EGP). ATMs available. Cash preferred for taxis.</p>
+                </div>
+                <div class="tip-card">
+                    <i class="fas fa-plug"></i>
+                    <h4>Power</h4>
+                    <p>Type C/F outlets (220V). Free WiFi at venue. Bring power bank.</p>
+                </div>
+                <div class="tip-card">
+                    <i class="fas fa-headset"></i>
+                    <h4>Support</h4>
+                    <p>Help desks at venue entrance. Emergency: +20 123 456 7890</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Tanta Student Medical Research Conference</p>
+            <p>Faculty of Medicine, Tanta University, Egypt</p>
+        </div>
+    </footer>
+
+    <!-- Custom JS -->
+    <script src="venue.js"></script>
+</body>
+</html>
