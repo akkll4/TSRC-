@@ -263,264 +263,280 @@
                 <p>Share your research with the medical community</p>
             </div>
 
-            <form id="abstractSubmissionForm">
-                <!-- Abstract Details -->
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <i class="fas fa-book-medical"></i>
-                        Abstract Details
-                    </h3>
-                    <div class="form-grid">
-                        <div class="form-group full-width">
-                            <label class="form-label">
-                                Abstract Title <span class="required">*</span>
-                            </label>
-                            <input type="text" class="form-input" name="title" required placeholder="Enter your research title">
-                            <div class="form-error">Please enter your abstract title</div>
-                        </div>
-<!-- Abstract Details
-                        <div class="form-group">
-                            <label class="form-label">
-                                Research Track <span class="required">*</span>
-                            </label>
-                            <select class="form-select" name="track" required>
-                                <option value="">Select research track</option>
-                                <option value="AI in Medical Imaging">AI in Medical Imaging</option>
-                                <option value="Drug Discovery & Development">Drug Discovery & Development</option>
-                                <option value="Clinical Decision Support">Clinical Decision Support</option>
-                                <option value="Cardiovascular AI">Cardiovascular AI</option>
-                                <option value="Neuroscience & AI">Neuroscience & AI</option>
-                                <option value="Digital Health & Telemedicine">Digital Health & Telemedicine</option>
-                            </select>
-                            <div class="form-error">Please select a research track</div>
-                        </div>  -->
+<form id="abstractSubmissionForm">
+    <!-- Abstract Details -->
+    <div class="form-section">
+        <h3 class="form-section-title">
+            <i class="fas fa-book-medical"></i>
+            Abstract Details
+        </h3>
+        <div class="form-grid">
+            <div class="form-group full-width">
+                <label class="form-label">
+                    Abstract Title <span class="required">*</span>
+                </label>
+                <input type="text" class="form-input" name="title" required placeholder="Enter your research title">
+                <div class="form-error">Please enter your abstract title</div>
+            </div>
 
-                        <div class="form-group">
-                            <label class="form-label">
-                                Study Type <span class="required">*</span>
-                            </label>
-                            <select class="form-select" name="studyType" required>
-                                <option value="">Select study type</option>
-                                <option value="Original Research">Original Research</option>
-                                <option value="Systematic Review">Systematic Review</option>
-                                <option value="Meta-Analysis">Meta-Analysis</option>
-                                <option value="Case Report">Case Report</option>
-                                <option value="Case Series">Case Series</option>
-                                
-                                <option value="Other">Other</option>
-                            </select>
-                            <div class="form-error">Please select study type</div>
-                        </div>
+            <div class="form-group">
+                <label class="form-label">
+                    Study Type <span class="required">*</span>
+                </label>
+                <select class="form-select" name="studyType" required>
+                    <option value="">Select study type</option>
+                    <option value="Original Research">Original Research</option>
+                    <option value="Systematic Review">Systematic Review</option>
+                    <option value="Meta-Analysis">Meta-Analysis</option>
+                    <option value="Case Report">Case Report</option>
+                    <option value="Case Series">Case Series</option>
+                    <option value="Literature Review">Literature Review</option>
+                    <option value="Other">Other</option>
+                </select>
+                <div class="form-error">Please select study type</div>
+            </div>
 
-                        <div class="form-group">
-                            <label class="form-label">
-                                Presentation Preference <span class="required">*</span>
-                            </label>
-                            <select class="form-select" name="presentationType" required>
-                                <option value="">Select preference</option>
-                                <option value="Oral Presentation">Oral Presentation</option>
-                                <option value="Poster Presentation">Poster Presentation</option>
-                                <option value="Either">Either (Committee Decision)</option>
-                            </select>
-                            <div class="form-error">Please select presentation preference</div>
-                        </div>
-<!-- Abstract Details
-                        <div class="form-group">
-                            <label class="form-label">
-                                Keywords <span class="required">*</span>
-                            </label>
-                            <input type="text" class="form-input" name="keywords" required placeholder="e.g., AI, Radiology, Diagnosis">
-                            <div class="form-hint">Separate keywords with commas (3-5 keywords)</div>
-                            <div class="form-error">Please enter keywords</div>
-                        </div>  -->
+            <div class="form-group">
+                <label class="form-label">
+                    Presentation Preference <span class="required">*</span>
+                </label>
+                <select class="form-select" name="presentationType" required>
+                    <option value="">Select preference</option>
+                    <option value="Oral Presentation">Oral Presentation</option>
+                    <option value="Poster Presentation">Poster Presentation</option>
+                    <option value="Either">Either (Committee Decision)</option>
+                </select>
+                <div class="form-error">Please select presentation preference</div>
+            </div>
 
-                    </div>
+            <div class="form-group full-width">
+                <label class="form-label">
+                    Keywords <span class="required">*</span>
+                </label>
+                <input type="text" class="form-input" name="keywords" required placeholder="e.g., AI, Radiology, Diagnosis">
+                <div class="form-hint">Separate keywords with commas (3-5 keywords)</div>
+                <div class="form-error">Please enter keywords</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ NEW SECTION: Previous Submissions -->
+    <div class="form-section">
+        <h3 class="form-section-title">
+            <i class="fas fa-history"></i>
+            Previous Submissions
+        </h3>
+        <div class="form-grid">
+            <div class="form-group full-width">
+                <label class="form-label">
+                    Have you submitted or participated with this abstract in any conference before? <span class="required">*</span>
+                </label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="previousSubmission" value="no" required>
+                        <span class="radio-label">No, this is my first submission</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="previousSubmission" value="yes">
+                        <span class="radio-label">Yes, I have presented/submitted it before</span>
+                    </label>
                 </div>
+                <div class="form-error">Please select an option</div>
+            </div>
 
-                <!-- Abstract Content -->
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <i class="fas fa-edit"></i>
-                        Abstract Content
-                    </h3>
-                    <div class="form-grid">
-                        <div class="form-group full-width">
-                            <label class="form-label">
-                                Background/Introduction <span class="required">*</span>
-                            </label>
-                            <textarea class="form-textarea" name="background" required placeholder="Provide context and rationale for your study (max 300 words)"></textarea>
-                            <div class="form-hint">Max 300 words</div>
-                            <div class="form-error">Please provide background information</div>
-                        </div>
-
-                        <div class="form-group full-width">
-                            <label class="form-label">
-                                Methods <span class="required">*</span>
-                            </label>
-                            <textarea class="form-textarea" name="methods" required placeholder="Describe your study design, participants, and methodology (max 300 words)"></textarea>
-                            <div class="form-hint">Max 300 words</div>
-                            <div class="form-error">Please describe your methods</div>
-                        </div>
-
-                        <div class="form-group full-width">
-                            <label class="form-label">
-                                Results <span class="required">*</span>
-                            </label>
-                            <textarea class="form-textarea" name="results" required placeholder="Present your key findings (max 300 words)"></textarea>
-                            <div class="form-hint">Max 300 words</div>
-                            <div class="form-error">Please present your results</div>
-                        </div>
-
-                        <div class="form-group full-width">
-                            <label class="form-label">
-                                Conclusion <span class="required">*</span>
-                            </label>
-                            <textarea class="form-textarea" name="conclusion" required placeholder="Summarize your main conclusions and implications (max 200 words)"></textarea>
-                            <div class="form-hint">Max 200 words</div>
-                            <div class="form-error">Please provide a conclusion</div>
-                        </div>
-                    </div>
+            <!-- Conditional fields (hidden by default) -->
+            <div class="conditional-fields" id="previousSubmissionDetails" style="display: none;">
+                <div class="form-group">
+                    <label class="form-label">
+                        Conference Name / Place <span class="required">*</span>
+                    </label>
+                    <input type="text" class="form-input conditional-field" name="previousConference" placeholder="e.g., Tanta Urology Conference 2024">
+                    <div class="form-error">Please enter the conference name</div>
                 </div>
-
-                <!-- Authors Information -->
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <i class="fas fa-users"></i>
-                        Authors Information
-                    </h3>
-
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label">
-                                Corresponding Author Name <span class="required">*</span>
-                            </label>
-                            <input type="text" class="form-input" name="correspondingName" required placeholder="Full name">
-                            <div class="form-error">Please enter corresponding author name</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">
-                                Corresponding Author Email <span class="required">*</span>
-                            </label>
-                            <input type="email" class="form-input" name="correspondingEmail" required placeholder="email@example.com">
-                            <div class="form-error">Please enter a valid email</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">
-                                Corresponding Author Phone <span class="required">*</span>
-                            </label>
-                            <input type="tel" class="form-input" name="correspondingPhone" required placeholder="+20 1XX XXX XXXX">
-                            <div class="form-error">Please enter phone number</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">
-                                Corresponding Author University <span class="required">*</span>
-                            </label>
-                            <input type="text" class="form-input" name="correspondingUniversity" required placeholder="University name">
-                            <div class="form-error">Please enter university</div>
-                        </div>
-                    </div>
-
-                    <!-- Co-authors -->
-                    <div class="co-authors-container">
-                        <label class="form-label">Co-authors (Optional)</label>
-                        <div id="coAuthorsList"></div>
-                        <button type="button" class="add-co-author-btn" id="addCoAuthorBtn">
-                            <i class="fas fa-plus"></i>
-                            Add Co-author
-                        </button>
-                    </div>
+                <div class="form-group">
+                    <label class="form-label">
+                        Date / Year <span class="required">*</span>
+                    </label>
+                    <input type="text" class="form-input conditional-field" name="previousDate" placeholder="e.g., September 2024">
+                    <div class="form-error">Please enter the date</div>
                 </div>
+            </div>
+        </div>
+    </div>
 
-                <!-- File Upload & Ethics -->
-                <div class="form-section">
-                    <h3 class="form-section-title">
-                        <i class="fas fa-upload"></i>
-                        File Upload & Ethics
-                    </h3>
+    <!-- ✅ UPDATED: Abstract Content with Combined Word Counter -->
+    <div class="form-section">
+        <h3 class="form-section-title">
+            <i class="fas fa-edit"></i>
+            Abstract Content
+        </h3>
+        
+        <!-- Combined Word Counter -->
+        <div class="word-counter-box">
+            <div class="word-counter-info">
+                <i class="fas fa-info-circle"></i>
+                <span>Total word limit for all sections combined: <strong>350 words</strong></span>
+            </div>
+            <div class="word-counter-display">
+                <span id="totalWordCount">0</span> / 350 words
+            </div>
+        </div>
 
-                    <div class="form-grid">
-                        <div class="form-group full-width">
-                            <label class="form-label">
-                                Upload Abstract Document <span class="required">*</span>
-                            </label>
-                            <div class="file-upload" id="fileUpload">
-                                <input type="file" id="fileInput" name="abstractFile" accept=".pdf,.doc,.docx" required>
-                                <div class="file-upload-icon">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                </div>
-                                <div class="file-upload-text">
-                                    Drag & drop your file here or click to browse
-                                </div>
-                                <div class="file-upload-hint">
-                                    PDF, DOC, or DOCX (Max 10MB)
-                                </div>
-                            </div>
-                            <div class="file-preview" id="filePreview">
-                                <div class="file-preview-icon">
-                                    <i class="fas fa-file-pdf"></i>
-                                </div>
-                                <div class="file-preview-info">
-                                    <div class="file-preview-name" id="fileName"></div>
-                                    <div class="file-preview-size" id="fileSize"></div>
-                                </div>
-                                <button type="button" class="file-preview-remove" id="fileRemove">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="form-error">Please upload your abstract document</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">
-                                Ethics Approval <span class="required">*</span>
-                            </label>
-                            <select class="form-select" name="ethicsApproval" required>
-                                <option value="">Select option</option>
-                                <option value="Yes">Yes - Approved</option>
-                                <option value="No">No - Not Required</option>
-                                <option value="Pending">Pending</option>
-                            </select>
-                            <div class="form-error">Please select ethics approval status</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">
-                                Ethics Approval Number
-                            </label>
-                            <input type="text" class="form-input" name="ethicsNumber" placeholder="Enter approval number if applicable">
-                        </div>
-
-                        <div class="form-group full-width">
-                            <label class="form-label">
-                                Conflict of Interest Statement <span class="required">*</span>
-                            </label>
-                            <textarea class="form-textarea" name="conflictOfInterest" required placeholder="Declare any conflicts of interest or state 'None'"></textarea>
-                            <div class="form-error">Please provide conflict of interest statement</div>
-                        </div>
-
-                        <div class="form-group full-width">
-                            <label class="form-checkbox">
-                                <input type="checkbox" name="abstractTerms" required>
-                                <span class="form-checkbox-label">
-                                    I confirm that this abstract is original, has not been published elsewhere, and all authors have approved the submission <span class="required">*</span>
-                                </span>
-                            </label>
-                            <div class="form-error">You must confirm the submission terms</div>
-                        </div>
-                    </div>
+        <div class="form-grid">
+            <div class="form-group full-width">
+                <label class="form-label">
+                    Background/Introduction <span class="required">*</span>
+                </label>
+                <textarea class="form-textarea abstract-textarea" name="background" required placeholder="Provide context and rationale for your study..."></textarea>
+                <div class="textarea-footer">
+                    <span class="word-count-indicator" data-target="background">0 words</span>
                 </div>
+                <div class="form-error">Please provide background information</div>
+            </div>
 
-                <button type="submit" class="submit-btn">
-                    <span class="btn-text">
-                        <i class="fas fa-paper-plane"></i>
-                        Submit Abstract
+            <div class="form-group full-width">
+                <label class="form-label">
+                    Methods <span class="required">*</span>
+                </label>
+                <textarea class="form-textarea abstract-textarea" name="methods" required placeholder="Describe your study design, participants, and methodology..."></textarea>
+                <div class="textarea-footer">
+                    <span class="word-count-indicator" data-target="methods">0 words</span>
+                </div>
+                <div class="form-error">Please describe your methods</div>
+            </div>
+
+            <div class="form-group full-width">
+                <label class="form-label">
+                    Results <span class="required">*</span>
+                </label>
+                <textarea class="form-textarea abstract-textarea" name="results" required placeholder="Present your key findings..."></textarea>
+                <div class="textarea-footer">
+                    <span class="word-count-indicator" data-target="results">0 words</span>
+                </div>
+                <div class="form-error">Please present your results</div>
+            </div>
+
+            <div class="form-group full-width">
+                <label class="form-label">
+                    Conclusion <span class="required">*</span>
+                </label>
+                <textarea class="form-textarea abstract-textarea" name="conclusion" required placeholder="Summarize your main conclusions and implications..."></textarea>
+                <div class="textarea-footer">
+                    <span class="word-count-indicator" data-target="conclusion">0 words</span>
+                </div>
+                <div class="form-error">Please provide a conclusion</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authors Information (UNCHANGED) -->
+    <div class="form-section">
+        <h3 class="form-section-title">
+            <i class="fas fa-users"></i>
+            Authors Information
+        </h3>
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label class="form-label">
+                    Corresponding Author Name <span class="required">*</span>
+                </label>
+                <input type="text" class="form-input" name="correspondingName" required placeholder="Full name">
+                <div class="form-error">Please enter corresponding author name</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    Corresponding Author Email <span class="required">*</span>
+                </label>
+                <input type="email" class="form-input" name="correspondingEmail" required placeholder="email@example.com">
+                <div class="form-error">Please enter a valid email</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    Corresponding Author Phone <span class="required">*</span>
+                </label>
+                <input type="tel" class="form-input" name="correspondingPhone" required placeholder="+20 1XX XXX XXXX">
+                <div class="form-error">Please enter phone number</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    Corresponding Author University <span class="required">*</span>
+                </label>
+                <input type="text" class="form-input" name="correspondingUniversity" required placeholder="University name">
+                <div class="form-error">Please enter university</div>
+            </div>
+        </div>
+
+        <!-- Co-authors -->
+        <div class="co-authors-container">
+            <label class="form-label">Co-authors (Optional)</label>
+            <div id="coAuthorsList"></div>
+            <button type="button" class="add-co-author-btn" id="addCoAuthorBtn">
+                <i class="fas fa-plus"></i>
+                Add Co-author
+            </button>
+        </div>
+    </div>
+
+    <!-- ✅ UPDATED: Ethics Only (File Upload Removed) -->
+    <div class="form-section">
+        <h3 class="form-section-title">
+            <i class="fas fa-balance-scale"></i>
+            Ethics & Compliance
+        </h3>
+
+        <div class="form-grid">
+            <div class="form-group">
+                <label class="form-label">
+                    Ethics Approval <span class="required">*</span>
+                </label>
+                <select class="form-select" name="ethicsApproval" required>
+                    <option value="">Select option</option>
+                    <option value="Yes">Yes - Approved</option>
+                    <option value="No">No - Not Required</option>
+                    <option value="Pending">Pending</option>
+                </select>
+                <div class="form-error">Please select ethics approval status</div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    Ethics Approval Number
+                </label>
+                <input type="text" class="form-input" name="ethicsNumber" placeholder="Enter approval number if applicable">
+            </div>
+
+            <div class="form-group full-width">
+                <label class="form-label">
+                    Conflict of Interest Statement <span class="required">*</span>
+                </label>
+                <textarea class="form-textarea" name="conflictOfInterest" required placeholder="Declare any conflicts of interest or state 'None'"></textarea>
+                <div class="form-error">Please provide conflict of interest statement</div>
+            </div>
+
+            <div class="form-group full-width">
+                <label class="form-checkbox">
+                    <input type="checkbox" name="abstractTerms" required>
+                    <span class="form-checkbox-label">
+                        I confirm that this abstract is original, has not been published elsewhere, and all authors have approved the submission <span class="required">*</span>
                     </span>
-                    <div class="spinner"></div>
-                </button>
-            </form>
+                </label>
+                <div class="form-error">You must confirm the submission terms</div>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="submit-btn">
+        <span class="btn-text">
+            <i class="fas fa-paper-plane"></i>
+            Submit Abstract
+        </span>
+        <div class="spinner"></div>
+    </button>
+</form>
         </div>
 
         <!-- Quick Links -->
