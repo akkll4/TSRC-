@@ -1065,27 +1065,27 @@
    PREVIOUS SUBMISSIONS - RADIO BUTTONS
    ============================================ */
 .form-section .radio-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
+    display: flex !important;
+    flex-direction: column!important;
+    gap: 0.75rem !important;
+    margin-top: 0.5rem !important;
 }
 
 .form-section .radio-option {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 1rem 1.25rem;
-    background: var(--light-bg);
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+    padding: 1rem 1.25rem !important;
+    background: var(--light-bg) !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 12px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
 }
 
 .radio-option:hover {
-    border-color: var(--primary);
-    background: rgba(45, 54, 145, 0.05);
+    border-color: var(--primary) !important;
+    background: rgba(45, 54, 145, 0.05) !important;
 }
 
 .radio-option input[type="radio"] {
@@ -1102,28 +1102,28 @@
 }
 
 .radio-option:has(input[type="radio"]:checked) {
-    border-color: var(--primary);
-    background: rgba(45, 54, 145, 0.08);
+    border-color: var(--primary) !important;
+    background: rgba(45, 54, 145, 0.08) !important;
 }
 
 .radio-label {
-    font-size: 1rem;
-    color: var(--text-dark);
-    user-select: none;
+    font-size: 1rem !important;
+    color: var(--text-dark) !important;
+    user-select: none !important;
 }
 
 /* Conditional Fields Animation */
 .conditional-fields {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    padding: 1.5rem;
-    background: rgba(242, 138, 36, 0.05);
-    border: 2px dashed var(--secondary);
-    border-radius: 12px;
-    margin-top: 1rem;
-    animation: slideDown 0.3s ease;
+    grid-column: 1 / -1 !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem !important;
+    padding: 1.5rem !important;
+    background: rgba(242, 138, 36, 0.05) !important;
+    border: 2px dashed var(--secondary) !important;
+    border-radius: 12px !important;
+    margin-top: 1rem !important;
+    animation: slideDown 0.3s ease !important;
 }
 
 @keyframes slideDown {
