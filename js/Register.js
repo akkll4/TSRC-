@@ -140,6 +140,31 @@ if (previousSubmissionRadios.length > 0) {
 }
 
 // ============================================
+// PUBLICATION STATUS - Conditional Fields (Question 2)
+// ============================================
+const publicationStatusRadios = document.querySelectorAll('input[name="publicationStatus"]');
+const publicationDetails = document.getElementById('publicationDetails');
+const publicationFields = document.querySelectorAll('.publication-field');
+
+if (publicationStatusRadios.length > 0) {
+    publicationStatusRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            if (e.target.value === 'abstract_published' || e.target.value === 'full_paper_published') {
+                if (publicationDetails) publicationDetails.style.display = 'grid';
+                publicationFields.forEach(field => field.setAttribute('required', 'required'));
+            } else {
+                if (publicationDetails) publicationDetails.style.display = 'none';
+                publicationFields.forEach(field => {
+                    field.removeAttribute('required');
+                    field.value = '';
+                });
+            }
+        });
+    });
+}
+
+
+// ============================================
 // 5. WORD COUNTER - Combined 350 Words Limit
 // ============================================
 const MAX_TOTAL_WORDS = 350;
@@ -328,6 +353,9 @@ if (abstractForm) {
                 previous_submission: formData.get('previousSubmission') || 'no',
                 previous_conference: formData.get('previousConference') || null,
                 previous_date: formData.get('previousDate') || null,
+
+                    publication_status: formData.get('publicationStatus') || 'no',
+                    publication_link: formData.get('publicationLink') || null,
                 
                 // Abstract content
                 background: formData.get('background') || '',
@@ -377,6 +405,15 @@ if (abstractForm) {
                     field.value = '';
                 });
             }
+
+            // Reset publication status conditional fields
+if (publicationDetails) {
+    publicationDetails.style.display = 'none';
+    publicationFields.forEach(field => {
+        field.removeAttribute('required');
+        field.value = '';
+    });
+}
             
             abstractTextareas.forEach(textarea => {
                 const target = textarea.getAttribute('name');
