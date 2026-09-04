@@ -29,7 +29,72 @@ function initSupabase() {
 // Initialize on script load
 supabaseClient = initSupabase();
       
-      
+      // 🔍 DEBUG: Test Supabase connection and permissions
+async function debugSupabase() {
+    console.log('🔍 Supabase Debug Start');
+    console.log('- Client initialized:', !!supabaseClient);
+    
+    if (!supabaseClient) {
+        console.error('❌ Supabase client is null');
+        return;
+    }
+    
+    // Test 1: Can we query the table structure?
+    try {
+        const { data: schema, error: schemaError } = await supabaseClient
+            .from('attendees')
+            .select('id', { count: 'exact', head: true });
+        
+        console.log('🔍 Schema test:', { schemaError: schemaError?.message || 'none' });
+    } catch (e) {
+        console.error('❌ Schema test failed:', e.message);
+    }
+    
+    // Test 2: Try a minimal INSERT (will be deleted after)
+    try {
+        const testEmail = `debug-${Date.now()}@test.com`;
+        const { data, error } = await supabaseClient
+            .from('attendees')
+            .insert([{
+                first_name: 'DEBUG',
+                last_name: 'TEST',
+                email: testEmail,
+                phone: '0000000000',
+                university: 'TEST',
+                faculty: 'TEST',
+                academic_year: 'TEST',
+                terms_accepted: true
+            }])
+            .select();
+        
+        if (error) {
+            console.error('❌ INSERT failed with 401 details:', {
+                message: error.message,
+                code: error.code,
+                hint: error.hint,
+                details: error.details,
+                status: error.status,
+                fullError: JSON.stringify(error, null, 2)
+            });
+        } else {
+            console.log('✅ INSERT succeeded! Cleaning up test row...');
+            // Delete the test row
+            await supabaseClient.from('attendees').delete().eq('email', testEmail);
+        }
+    } catch (e) {
+        console.error('❌ INSERT test threw exception:', e);
+    }
+    
+    console.log('🔍 Supabase Debug End');
+}
+
+// Run debug on page load
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', debugSupabase);
+} else {
+    debugSupabase();
+}
+
       
       // Mobile Menu Toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
