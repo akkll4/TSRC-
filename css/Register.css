@@ -1114,16 +1114,16 @@
 
 /* Conditional Fields Animation */
 .conditional-fields {
-    grid-column: 1 / -1 !important;
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 1.5rem !important;
-    padding: 1.5rem !important;
-    background: rgba(242, 138, 36, 0.05) !important;
-    border: 2px dashed var(--secondary) !important;
-    border-radius: 12px !important;
-    margin-top: 1rem !important;
-    animation: slideDown 0.3s ease !important;
+    grid-column: 1 / -1 ;
+    display: grid ;
+    grid-template-columns: repeat(2, 1fr) ;
+    gap: 1.5rem ;
+    padding: 1.5rem ;
+    background: rgba(242, 138, 36, 0.05) ;
+    border: 2px dashed var(--secondary) ;
+    border-radius: 12px ;
+    margin-top: 1rem ;
+    animation: slideDown 0.3s ease ;
 }
 
 @keyframes slideDown {
