@@ -811,12 +811,43 @@ async function reviewAbstract(status) {
     }
 }
 
-function downloadAbstract(id) {
+async function downloadAbstract(id) {
     const abs = abstractsData.find(a => a.id === id);
-    if (abs?.file_url) {
-        window.open(abs.file_url, '_blank');
-    } else {
-        showToast('warning', 'No File', 'Abstract file not available');
+    if (!abs) {
+        showToast('error', 'Not Found', 'Abstract not found');
+        return;
+    }
+    
+    if (!abs.file_name) {
+        showToast('error', 'No File', 'This abstract has no attached file');
+        return;
+    }
+
+    try {
+        showToast('info', 'Preparing Download', 'Generating secure link...');
+
+        // Generate a signed URL that expires in 1 hour (3600 seconds)
+        const { data: signedUrlData, error: signedUrlError } = await supabase.storage
+            .from('abstracts')
+            .createSignedUrl(abs.file_name, 3600); // 1 hour expiry
+
+        if (signedUrlError) {
+            console.error('Signed URL error:', signedUrlError);
+            throw signedUrlError;
+        }
+
+        if (!signedUrlData || !signedUrlData.signedUrl) {
+            throw new Error('Could not generate download link');
+        }
+
+        // Open the signed URL in a new tab
+        window.open(signedUrlData.signedUrl, '_blank');
+        
+        showToast('success', 'Download Started', `Opening: ${abs.file_name}`);
+
+    } catch (error) {
+        console.error('Download error:', error);
+        showToast('error', 'Download Failed', error.message || 'Could not download file');
     }
 }
 
