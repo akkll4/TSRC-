@@ -95,6 +95,39 @@ if (document.readyState === 'loading') {
     debugSupabase();
 }
 
+async function rawAPITest() {
+    const anonKey = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlqZXJ0cGRlbXRtb2pqcnd0cHZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyODE2NzMsImV4cCI6MjA5Nzg1NzY3M30.xNDz_Hv7yxxjujZjUOo7Ocf2s9rmBtIDo3ewCzyL-VA'; // Your actual anon key
+    
+    const response = await fetch('https://ijertpdemtmojjrwtpvg.supabase.co/rest/v1/attendees', {
+        method: 'POST',
+        headers: {
+            'apikey': anonKey,
+            'Authorization': `Bearer ${anonKey}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation'
+        },
+        body: JSON.stringify({
+            first_name: 'RAW_TEST',
+            last_name: 'TEST',
+            email: `raw-${Date.now()}@test.com`,
+            phone: '0000000000',
+            university: 'TEST',
+            faculty: 'TEST',
+            academic_year: 'TEST',
+            terms_accepted: true
+        })
+    });
+    
+    const result = await response.json();
+    console.log('🔍 Raw API Test:', {
+        status: response.status,
+        statusText: response.statusText,
+        body: result
+    });
+}
+
+// Run test
+rawAPITest();
       
       // Mobile Menu Toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
