@@ -333,6 +333,16 @@ attendeeForm.addEventListener('submit', async (e) => {
 const { data, error } = await supabase
   .from('attendees')
   .insert([payload])
+      const { data: sessionData, error: sessionError } =
+    await supabase.auth.getSession();
+
+console.log("🔐 SESSION DEBUG:", {
+    sessionExists: !!sessionData.session,
+    userExists: !!sessionData.session?.user,
+    userId: sessionData.session?.user?.id,
+    role: sessionData.session?.user?.role,
+    sessionError
+});
   .select();
 
 console.log("DATA:", data);
