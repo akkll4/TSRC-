@@ -217,7 +217,8 @@ function updateWordCounters() {
 // ============================================
 const titleInput = document.getElementById('abstractTitle');
 const titleWordCountDisplay = document.getElementById('titleWordCount');
-const MAX_TITLE_WORDS = 15;
+const MAX_TITLE_WORDS = 20;
+const WARNING_TITLE_WORDS = 15; // Soft warning threshold
 
 if (titleInput && titleWordCountDisplay) {
     titleInput.addEventListener('input', () => {
@@ -225,9 +226,13 @@ if (titleInput && titleWordCountDisplay) {
         titleWordCountDisplay.textContent = `${words} / ${MAX_TITLE_WORDS} words`;
         
         titleWordCountDisplay.classList.remove('warning', 'error');
+        
+        // Red error if over 20
         if (words > MAX_TITLE_WORDS) {
             titleWordCountDisplay.classList.add('error');
-        } else if (words >= MAX_TITLE_WORDS * 0.8) {
+        } 
+        // Yellow warning if between 15 and 20
+        else if (words >= WARNING_TITLE_WORDS) {
             titleWordCountDisplay.classList.add('warning');
         }
     });
