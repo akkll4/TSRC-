@@ -472,29 +472,7 @@ console.log('📝 Registration System Connected to Supabase!');
 
 
 
-        function validateForm(form) {
-            let isValid = true;
-            const requiredFields = form.querySelectorAll('[required]');
-            
-            requiredFields.forEach(field => {
-                const formGroup = field.closest('.form-group');
-                
-                if (field.type === 'checkbox' && !field.checked) {
-                    isValid = false;
-                    if (formGroup) formGroup.classList.add('error');
-                } else if (field.type !== 'checkbox' && !field.value.trim()) {
-                    isValid = false;
-                    if (formGroup) formGroup.classList.add('error');
-                } else if (field.type === 'email' && !isValidEmail(field.value)) {
-                    isValid = false;
-                    if (formGroup) formGroup.classList.add('error');
-                } else {
-                    if (formGroup) formGroup.classList.remove('error');
-                }
-            });
 
-            return isValid;
-        }
 
         function isValidEmail(email) {
             return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -510,27 +488,6 @@ console.log('📝 Registration System Connected to Supabase!');
             });
         });
 
-        // Toast Notification
-        function showToast(type, title, message) {
-            const toast = document.getElementById('toast');
-            const toastIcon = toast.querySelector('.toast-icon i');
-            const toastTitle = toast.querySelector('.toast-title');
-            const toastMessage = toast.querySelector('.toast-message');
 
-            toast.className = `toast ${type}`;
-            toastIcon.className = type === 'success' ? 'fas fa-check' : 'fas fa-exclamation-triangle';
-            toastTitle.textContent = title;
-            toastMessage.textContent = message;
-
-            toast.classList.add('show');
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 5000);
-        }
-
-        document.getElementById('toastClose').addEventListener('click', () => {
-            document.getElementById('toast').classList.remove('show');
-        });
 
         console.log('TSMRC 2026 - Registration Page Loaded Successfully!');
