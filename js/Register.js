@@ -304,31 +304,34 @@ if (abstractForm) {
         if (!supabaseClient) return showToast('error', 'Connection Error', 'Database not connected.');
         if (!validateForm(abstractForm)) return showToast('error', 'Validation Error', 'Please fill in all required fields.');
 
-        // ✅ NEW: Check total word count before submitting
+        // ✅ MOVED UP: Create formData FIRST so we can use it for validations
+        const formData = new FormData(abstractForm);
+
+        // ✅ Check total word count before submitting
         const totalWords = updateWordCounters();
         if (totalWords > MAX_TOTAL_WORDS) {
             showToast('error', 'Word Limit Exceeded', `Your abstract has ${totalWords} words. Maximum allowed is ${MAX_TOTAL_WORDS} words.`);
             return;
         }
-
         
         if (totalWords < MIN_TOTAL_WORDS) {
             showToast('error', 'Abstract Too Short', `Your abstract has only ${totalWords} words. Please provide more details (minimum ${MIN_TOTAL_WORDS} words).`);
             return;
         }
-        const titleWords = countWords(formData.get('title'));
+
+        // ✅ Now this works perfectly because formData is defined above
+        const titleWords = countWords(formData.get('title') || '');
         if (titleWords > MAX_TITLE_WORDS) {
             showToast('error', 'Title Too Long', `The abstract title must be ${MAX_TITLE_WORDS} words or less. Current: ${titleWords} words.`);
             return;
         }
-
 
         const submitBtn = abstractForm.querySelector('.submit-btn');
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
 
         try {
-            const formData = new FormData(abstractForm);
+            // ❌ DELETED: const formData = new FormData(abstractForm); (It's already defined above!)
             
             const coAuthors = [];
             let currentCoAuthorCount = 1;
