@@ -330,12 +330,20 @@ attendeeForm.addEventListener('submit', async (e) => {
         };
 
         // Insert into Supabase
-        const { data, error } = await supabaseClient
-            .from('attendees')
-            .insert([attendeeData])
-            .select();
+const { data, error } = await supabase
+  .from('attendees')
+  .insert([payload])
+  .select();
 
-        if (error) throw error;
+console.log("DATA:", data);
+console.log("ERROR:", error);
+
+if (error) {
+    console.log("error.code:", error.code);
+    console.log("error.message:", error.message);
+    console.log("error.details:", error.details);
+    console.log("error.hint:", error.hint);
+}
 
         // Success!
         console.log('Registration successful:', data);
