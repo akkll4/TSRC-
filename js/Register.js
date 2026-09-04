@@ -146,23 +146,9 @@ const MAX_TOTAL_WORDS = 350;
 const MIN_TOTAL_WORDS = 50;
 const abstractTextareas = document.querySelectorAll('.abstract-textarea');
 const totalWordCountDisplay = document.getElementById('totalWordCount');
-const titleInput = document.getElementById('abstractTitle');
-const titleWordCountDisplay = document.getElementById('titleWordCount');
-const MAX_TITLE_WORDS = 15;
 
-if (titleInput && titleWordCountDisplay) {
-    titleInput.addEventListener('input', () => {
-        const words = countWords(titleInput.value);
-        titleWordCountDisplay.textContent = `${words} / ${MAX_TITLE_WORDS} words`;
-        
-        titleWordCountDisplay.classList.remove('warning', 'error');
-        if (words > MAX_TITLE_WORDS) {
-            titleWordCountDisplay.classList.add('error');
-        } else if (words >= MAX_TITLE_WORDS * 0.8) {
-            titleWordCountDisplay.classList.add('warning');
-        }
-    });
-}
+
+
 
 function countWords(text) {
     if (!text || !text.trim()) return 0;
@@ -199,6 +185,27 @@ function updateWordCounters() {
     }
     
     return totalWords;
+}
+
+// ============================================
+// TITLE WORD COUNTER (Max 15 words)
+// ============================================
+const titleInput = document.getElementById('abstractTitle');
+const titleWordCountDisplay = document.getElementById('titleWordCount');
+const MAX_TITLE_WORDS = 15;
+
+if (titleInput && titleWordCountDisplay) {
+    titleInput.addEventListener('input', () => {
+        const words = countWords(titleInput.value);
+        titleWordCountDisplay.textContent = `${words} / ${MAX_TITLE_WORDS} words`;
+        
+        titleWordCountDisplay.classList.remove('warning', 'error');
+        if (words > MAX_TITLE_WORDS) {
+            titleWordCountDisplay.classList.add('error');
+        } else if (words >= MAX_TITLE_WORDS * 0.8) {
+            titleWordCountDisplay.classList.add('warning');
+        }
+    });
 }
 
 abstractTextareas.forEach(textarea => {
@@ -284,12 +291,12 @@ if (abstractForm) {
             showToast('error', 'Abstract Too Short', `Your abstract has only ${totalWords} words. Please provide more details (minimum ${MIN_TOTAL_WORDS} words).`);
             return;
         }
-
-                const titleWords = countWords(formData.get('title'));
+        const titleWords = countWords(formData.get('title'));
         if (titleWords > MAX_TITLE_WORDS) {
             showToast('error', 'Title Too Long', `The abstract title must be ${MAX_TITLE_WORDS} words or less. Current: ${titleWords} words.`);
             return;
         }
+
 
         const submitBtn = abstractForm.querySelector('.submit-btn');
         submitBtn.classList.add('loading');
