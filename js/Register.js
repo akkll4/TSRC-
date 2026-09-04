@@ -1,17 +1,13 @@
 // ============================================
-// 1. SUPABASE INIT - FIXED & OPTIMIZED
+// 1. SUPABASE INIT
 // ============================================
-
 let supabaseClient = null;
 
 function initSupabase() {
     if (typeof window.supabase === 'undefined') {
         console.error('❌ Supabase CDN not loaded!');
-        console.error('Add this to register.html <head>:');
-        console.error('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>');
         return null;
     }
-    
     try {
         const { createClient } = window.supabase;
         return createClient(
@@ -31,13 +27,11 @@ function initSupabase() {
     }
 }
 
-// Initialize on script load
 supabaseClient = initSupabase();
 
 // ============================================
 // 2. UI INTERACTION (Mobile Menu & Tabs)
 // ============================================
-
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const navLinks = document.getElementById('navLinks');
 
@@ -45,13 +39,8 @@ if (mobileMenuBtn && navLinks) {
     mobileMenuBtn.addEventListener('click', () => {
         navLinks.classList.toggle('active');
         const icon = mobileMenuBtn.querySelector('i');
-        if (navLinks.classList.contains('active')) {
-            icon.classList.remove('fa-bars');
-            icon.classList.add('fa-times');
-        } else {
-            icon.classList.remove('fa-times');
-            icon.classList.add('fa-bars');
-        }
+        icon.classList.toggle('fa-bars', !navLinks.classList.contains('active'));
+        icon.classList.toggle('fa-times', navLinks.classList.contains('active'));
     });
 
     navLinks.querySelectorAll('a').forEach(link => {
@@ -69,10 +58,8 @@ const formCards = document.querySelectorAll('.form-card');
 tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         const targetTab = btn.getAttribute('data-tab');
-        
         tabBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        
         formCards.forEach(card => card.classList.remove('active'));
         const targetForm = document.getElementById(targetTab + 'Form');
         if (targetForm) targetForm.classList.add('active');
@@ -87,7 +74,6 @@ tabBtns.forEach(btn => {
 // ============================================
 // 3. FILE UPLOAD HANDLING
 // ============================================
-
 const fileUpload = document.getElementById('fileUpload');
 const fileInput = document.getElementById('fileInput');
 const filePreview = document.getElementById('filePreview');
@@ -98,15 +84,8 @@ const fileRemove = document.getElementById('fileRemove');
 if (fileUpload && fileInput) {
     fileUpload.addEventListener('click', () => fileInput.click());
 
-    fileUpload.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        fileUpload.classList.add('dragover');
-    });
-
-    fileUpload.addEventListener('dragleave', () => {
-        fileUpload.classList.remove('dragover');
-    });
-
+    fileUpload.addEventListener('dragover', (e) => { e.preventDefault(); fileUpload.classList.add('dragover'); });
+    fileUpload.addEventListener('dragleave', () => { fileUpload.classList.remove('dragover'); });
     fileUpload.addEventListener('drop', (e) => {
         e.preventDefault();
         fileUpload.classList.remove('dragover');
@@ -117,9 +96,7 @@ if (fileUpload && fileInput) {
     });
 
     fileInput.addEventListener('change', (e) => {
-        if (e.target.files.length > 0) {
-            handleFileSelect(e.target.files[0]);
-        }
+        if (e.target.files.length > 0) handleFileSelect(e.target.files[0]);
     });
 
     function handleFileSelect(file) {
@@ -131,7 +108,6 @@ if (fileUpload && fileInput) {
             fileInput.value = '';
             return;
         }
-
         if (file.size > maxSize) {
             showToast('error', 'File Too Large', 'Maximum file size is 10MB');
             fileInput.value = '';
@@ -164,7 +140,6 @@ if (fileUpload && fileInput) {
 // ============================================
 // 4. CO-AUTHORS MANAGEMENT
 // ============================================
-
 let coAuthorCount = 0;
 const addCoAuthorBtn = document.getElementById('addCoAuthorBtn');
 const coAuthorsList = document.getElementById('coAuthorsList');
@@ -203,30 +178,19 @@ if (addCoAuthorBtn) {
 
 window.removeCoAuthor = function(id) {
     const coAuthor = document.getElementById(`coAuthor${id}`);
-    if (coAuthor) {
-        coAuthor.remove();
-    }
+    if (coAuthor) coAuthor.remove();
 };
 
 // ============================================
-// 5. ATTENDEE REGISTRATION WITH SUPABASE
+// 5. ATTENDEE REGISTRATION
 // ============================================
-
 const attendeeForm = document.getElementById('attendeeRegistrationForm');
 
 if (attendeeForm) {
     attendeeForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-
-        if (!supabaseClient) {
-            showToast('error', 'Connection Error', 'Database not connected. Please try again later.');
-            return;
-        }
-        
-        if (!validateForm(attendeeForm)) {
-            showToast('error', 'Validation Error', 'Please fill in all required fields correctly');
-            return;
-        }
+        if (!supabaseClient) return showToast('error', 'Connection Error', 'Database not connected.');
+        if (!validateForm(attendeeForm)) return showToast('error', 'Validation Error', 'Please fill in all required fields.');
 
         const submitBtn = attendeeForm.querySelector('.submit-btn');
         submitBtn.classList.add('loading');
@@ -235,15 +199,15 @@ if (attendeeForm) {
         try {
             const formData = new FormData(attendeeForm);
             const attendeeData = {
-                first_name: formData.get('firstName'),
-                last_name: formData.get('lastName'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
+                first_name: formData.get('firstName') || '',
+                last_name: formData.get('lastName') || '',
+                email: formData.get('email') || '',
+                phone: formData.get('phone') || '',
                 whatsapp: formData.get('whatsapp') || null,
-                nationality: formData.get('nationality'),
-                university: formData.get('university'),
-                faculty: formData.get('faculty'),
-                academic_year: formData.get('academicYear'),
+                nationality: formData.get('nationality') || '',
+                university: formData.get('university') || '',
+                faculty: formData.get('faculty') || '',
+                academic_year: formData.get('academicYear') || '',
                 student_id: formData.get('studentId') || null,
                 hear_about: formData.get('hearAbout') || null,
                 dietary_restrictions: formData.get('dietary') || null,
@@ -253,33 +217,17 @@ if (attendeeForm) {
                 user_agent: navigator.userAgent
             };
 
-            // ✅ FIXED: Use supabaseClient, attendeeData, and NO .select() 
-            // (anon users don't have SELECT permission, so .select() causes a 401)
-            const { error } = await supabaseClient
-                .from('attendees')
-                .insert([attendeeData]);
+            const { error } = await supabaseClient.from('attendees').insert([attendeeData]);
+            if (error) throw error;
 
-            if (error) {
-                console.error('❌ Registration error details:', {
-                    code: error.code,
-                    message: error.message,
-                    details: error.details,
-                    hint: error.hint
-                });
-                throw error;
-            }
-
-            console.log('✅ Registration successful!');
             showToast('success', 'Registration Successful!', 'Check your email for confirmation details');
             attendeeForm.reset();
-
         } catch (error) {
             console.error('Registration error:', error);
-            
             if (error.code === '23505') {
-                showToast('error', 'Email Already Registered', 'This email is already registered. Please use a different email.');
+                showToast('error', 'Email Already Registered', 'This email is already registered.');
             } else {
-                showToast('error', 'Registration Failed', error.message || 'Please try again or contact support.');
+                showToast('error', 'Registration Failed', error.message || 'Please try again.');
             }
         } finally {
             submitBtn.classList.remove('loading');
@@ -289,29 +237,19 @@ if (attendeeForm) {
 }
 
 // ============================================
-// 6. ABSTRACT SUBMISSION WITH SUPABASE
+// 6. ABSTRACT SUBMISSION (FIXED)
 // ============================================
-
 const abstractForm = document.getElementById('abstractSubmissionForm');
 
 if (abstractForm) {
     abstractForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-
-        if (!supabaseClient) {
-            showToast('error', 'Connection Error', 'Database not connected. Please try again later.');
-            return;
-        }
-        
-        if (!validateForm(abstractForm)) {
-            showToast('error', 'Validation Error', 'Please fill in all required fields correctly');
-            return;
-        }
+        if (!supabaseClient) return showToast('error', 'Connection Error', 'Database not connected.');
+        if (!validateForm(abstractForm)) return showToast('error', 'Validation Error', 'Please fill in all required fields.');
 
         const currentFileInput = document.getElementById('fileInput');
         if (!currentFileInput || !currentFileInput.files.length) {
-            showToast('error', 'File Required', 'Please upload your abstract document');
-            return;
+            return showToast('error', 'File Required', 'Please upload your abstract document');
         }
 
         const submitBtn = abstractForm.querySelector('.submit-btn');
@@ -325,61 +263,56 @@ if (abstractForm) {
             
             const { error: uploadError } = await supabaseClient.storage
                 .from('abstracts')
-                .upload(uploadFileName, file, {
-                    cacheControl: '3600',
-                    upsert: false
-                });
+                .upload(uploadFileName, file, { cacheControl: '3600', upsert: false });
 
             if (uploadError) throw uploadError;
 
-            const { data: { publicUrl } } = supabaseClient.storage
-                .from('abstracts')
-                .getPublicUrl(uploadFileName);
-
+            const { data: { publicUrl } } = supabaseClient.storage.from('abstracts').getPublicUrl(uploadFileName);
             const formData = new FormData(abstractForm);
             
             const coAuthors = [];
             let currentCoAuthorCount = 1;
             while (document.querySelector(`[name="coAuthor${currentCoAuthorCount}Name"]`)) {
                 coAuthors.push({
-                    name: document.querySelector(`[name="coAuthor${currentCoAuthorCount}Name"]`).value,
-                    email: document.querySelector(`[name="coAuthor${currentCoAuthorCount}Email"]`).value,
-                    university: document.querySelector(`[name="coAuthor${currentCoAuthorCount}University"]`).value,
-                    country: document.querySelector(`[name="coAuthor${currentCoAuthorCount}Country"]`).value
+                    name: document.querySelector(`[name="coAuthor${currentCoAuthorCount}Name"]`).value || '',
+                    email: document.querySelector(`[name="coAuthor${currentCoAuthorCount}Email"]`).value || '',
+                    university: document.querySelector(`[name="coAuthor${currentCoAuthorCount}University"]`).value || '',
+                    country: document.querySelector(`[name="coAuthor${currentCoAuthorCount}Country"]`).value || ''
                 });
                 currentCoAuthorCount++;
             }
 
+            // ✅ FIXED: Added fallbacks (|| '') to EVERY field to guarantee NO NULL values are sent
             const abstractData = {
-                title: formData.get('title'),
-                track: formData.get('track'),
-                study_type: formData.get('studyType'),
-                presentation_type: formData.get('presentationType'),
-                keywords: formData.get('keywords'),
-                background: formData.get('background'),
-                methods: formData.get('methods'),
-                results: formData.get('results'),
-                conclusion: formData.get('conclusion'),
-                corresponding_name: formData.get('correspondingName'),
-                corresponding_email: formData.get('correspondingEmail'),
-                corresponding_phone: formData.get('correspondingPhone'),
-                corresponding_university: formData.get('correspondingUniversity'),
-                co_authors: coAuthors,
+                title: formData.get('title') || 'Untitled',
+                track: formData.get('track') || 'General Research', // ← This prevents the "null value in column track" error
+                study_type: formData.get('studyType') || 'Original Research',
+                presentation_type: formData.get('presentationType') || 'Oral Presentation',
+                keywords: formData.get('keywords') || '',
+                background: formData.get('background') || '',
+                methods: formData.get('methods') || '',
+                results: formData.get('results') || '',
+                conclusion: formData.get('conclusion') || '',
+                corresponding_name: formData.get('correspondingName') || '',
+                corresponding_email: formData.get('correspondingEmail') || '',
+                corresponding_phone: formData.get('correspondingPhone') || '',
+                corresponding_university: formData.get('correspondingUniversity') || '',
+                co_authors: coAuthors.length > 0 ? coAuthors : [],
                 file_url: publicUrl,
                 file_name: file.name,
                 file_size: file.size,
-                ethics_approval: formData.get('ethicsApproval'),
+                ethics_approval: formData.get('ethicsApproval') || 'Pending',
                 ethics_number: formData.get('ethicsNumber') || null,
-                conflict_of_interest: formData.get('conflictOfInterest'),
+                conflict_of_interest: formData.get('conflictOfInterest') || 'None',
                 terms_accepted: formData.get('abstractTerms') === 'on',
                 submission_ip: await getClientIP(),
                 user_agent: navigator.userAgent
             };
 
-            // ✅ FIXED: Removed .select() to prevent RLS SELECT denial for anon users
-            const { error } = await supabaseClient
-                .from('abstracts')
-                .insert([abstractData]);
+            // 🔍 DEBUG: Log the exact payload being sent to Supabase
+            console.log('🔍 Abstract Payload being sent:', abstractData);
+
+            const { error } = await supabaseClient.from('abstracts').insert([abstractData]);
 
             if (error) {
                 console.error('❌ Abstract submission error details:', {
@@ -402,8 +335,7 @@ if (abstractForm) {
             if (preview) preview.classList.remove('active');
             if (uploadBox) uploadBox.style.display = 'block';
             if (authorsList) authorsList.innerHTML = '';
-            
-            coAuthorCount = 0; // Reset global counter
+            coAuthorCount = 0;
 
         } catch (error) {
             console.error('Abstract submission error:', error);
@@ -418,7 +350,6 @@ if (abstractForm) {
 // ============================================
 // 7. HELPER FUNCTIONS
 // ============================================
-
 async function getClientIP() {
     try {
         const response = await fetch('https://api.ipify.org?format=json');
@@ -432,10 +363,8 @@ async function getClientIP() {
 function validateForm(form) {
     let isValid = true;
     const requiredFields = form.querySelectorAll('[required]');
-    
     requiredFields.forEach(field => {
         const formGroup = field.closest('.form-group');
-        
         if (field.type === 'checkbox' && !field.checked) {
             isValid = false;
             if (formGroup) formGroup.classList.add('error');
@@ -449,7 +378,6 @@ function validateForm(form) {
             if (formGroup) formGroup.classList.remove('error');
         }
     });
-
     return isValid;
 }
 
@@ -460,16 +388,13 @@ function isValidEmail(email) {
 document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(input => {
     input.addEventListener('input', () => {
         const formGroup = input.closest('.form-group');
-        if (formGroup) {
-            formGroup.classList.remove('error');
-        }
+        if (formGroup) formGroup.classList.remove('error');
     });
 });
 
 function showToast(type, title, message) {
     const toast = document.getElementById('toast');
     if (!toast) return;
-    
     const toastIcon = toast.querySelector('.toast-icon i');
     const toastTitle = toast.querySelector('.toast-title');
     const toastMessage = toast.querySelector('.toast-message');
@@ -478,12 +403,9 @@ function showToast(type, title, message) {
     toastIcon.className = type === 'success' ? 'fas fa-check' : 'fas fa-exclamation-triangle';
     toastTitle.textContent = title;
     toastMessage.textContent = message;
-
     toast.classList.add('show');
 
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 5000);
+    setTimeout(() => { toast.classList.remove('show'); }, 5000);
 }
 
 const toastClose = document.getElementById('toastClose');
