@@ -285,7 +285,7 @@ if (abstractForm) {
             // ✅ FIXED: Added fallbacks (|| '') to EVERY field to guarantee NO NULL values are sent
             const abstractData = {
                 title: formData.get('title') || 'Untitled',
-                track: formData.get('track') || 'General Research', // ← This prevents the "null value in column track" error
+                track: 'General', // ← This prevents the "null value in column track" error
                 study_type: formData.get('studyType') || 'Original Research',
                 presentation_type: formData.get('presentationType') || 'Oral Presentation',
                 keywords: formData.get('keywords') || '',
