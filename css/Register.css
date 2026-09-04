@@ -1059,6 +1059,206 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
+
+                /* ============================================
+   PREVIOUS SUBMISSIONS - RADIO BUTTONS
+   ============================================ */
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: var(--light-bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.radio-option:hover {
+    border-color: var(--primary);
+    background: rgba(45, 54, 145, 0.05);
+}
+
+.radio-option input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary);
+    margin: 0;
+}
+
+.radio-option input[type="radio"]:checked ~ .radio-label {
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.radio-option:has(input[type="radio"]:checked) {
+    border-color: var(--primary);
+    background: rgba(45, 54, 145, 0.08);
+}
+
+.radio-label {
+    font-size: 1rem;
+    color: var(--text-dark);
+    user-select: none;
+}
+
+/* Conditional Fields Animation */
+.conditional-fields {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(242, 138, 36, 0.05);
+    border: 2px dashed var(--secondary);
+    border-radius: 12px;
+    margin-top: 1rem;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .conditional-fields {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   WORD COUNTER - ABSTRACT CONTENT
+   ============================================ */
+.word-counter-box {
+    background: linear-gradient(135deg, rgba(45, 54, 145, 0.05) 0%, rgba(242, 138, 36, 0.05) 100%);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.word-counter-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-dark);
+    font-size: 0.95rem;
+}
+
+.word-counter-info i {
+    color: var(--primary);
+    font-size: 1.25rem;
+}
+
+.word-counter-info strong {
+    color: var(--secondary);
+    font-weight: 700;
+}
+
+.word-counter-display {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--primary);
+    padding: 0.5rem 1.25rem;
+    background: white;
+    border-radius: 50px;
+    border: 2px solid var(--primary);
+}
+
+.word-counter-display.warning {
+    color: var(--warning);
+    border-color: var(--warning);
+    background: rgba(245, 158, 11, 0.05);
+}
+
+.word-counter-display.error {
+    color: var(--error);
+    border-color: var(--error);
+    background: rgba(239, 68, 68, 0.05);
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Individual Textarea Word Count */
+.textarea-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+}
+
+.word-count-indicator {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    background: var(--light-bg);
+    border-radius: 50px;
+    transition: all 0.3s ease;
+}
+
+.word-count-indicator.warning {
+    color: var(--warning);
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.word-count-indicator.error {
+    color: var(--error);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+@media (max-width: 768px) {
+    .word-counter-box {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+    
+    .word-counter-info {
+        justify-content: center;
+    }
+    
+    .word-counter-display {
+        align-self: center;
+    }
+    
+    .radio-group {
+        gap: 0.5rem;
+    }
+    
+    .radio-option {
+        padding: 0.875rem 1rem;
+    }
+}
             to {
                 opacity: 1;
                 transform: translateY(0);
