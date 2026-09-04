@@ -72,73 +72,7 @@ tabBtns.forEach(btn => {
 });
 
 // ============================================
-// 3. FILE UPLOAD HANDLING
-// ============================================
-const fileUpload = document.getElementById('fileUpload');
-const fileInput = document.getElementById('fileInput');
-const filePreview = document.getElementById('filePreview');
-const fileName = document.getElementById('fileName');
-const fileSize = document.getElementById('fileSize');
-const fileRemove = document.getElementById('fileRemove');
-
-if (fileUpload && fileInput) {
-    fileUpload.addEventListener('click', () => fileInput.click());
-
-    fileUpload.addEventListener('dragover', (e) => { e.preventDefault(); fileUpload.classList.add('dragover'); });
-    fileUpload.addEventListener('dragleave', () => { fileUpload.classList.remove('dragover'); });
-    fileUpload.addEventListener('drop', (e) => {
-        e.preventDefault();
-        fileUpload.classList.remove('dragover');
-        if (e.dataTransfer.files.length > 0) {
-            fileInput.files = e.dataTransfer.files;
-            handleFileSelect(e.dataTransfer.files[0]);
-        }
-    });
-
-    fileInput.addEventListener('change', (e) => {
-        if (e.target.files.length > 0) handleFileSelect(e.target.files[0]);
-    });
-
-    function handleFileSelect(file) {
-        const maxSize = 10 * 1024 * 1024; // 10MB
-        const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-        
-        if (!allowedTypes.includes(file.type)) {
-            showToast('error', 'Invalid File Type', 'Please upload a PDF, DOC, or DOCX file');
-            fileInput.value = '';
-            return;
-        }
-        if (file.size > maxSize) {
-            showToast('error', 'File Too Large', 'Maximum file size is 10MB');
-            fileInput.value = '';
-            return;
-        }
-
-        fileName.textContent = file.name;
-        fileSize.textContent = formatFileSize(file.size);
-        filePreview.classList.add('active');
-        fileUpload.style.display = 'none';
-    }
-
-    if (fileRemove) {
-        fileRemove.addEventListener('click', () => {
-            fileInput.value = '';
-            filePreview.classList.remove('active');
-            fileUpload.style.display = 'block';
-        });
-    }
-
-    function formatFileSize(bytes) {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
-    }
-}
-
-// ============================================
-// 4. CO-AUTHORS MANAGEMENT
+// 3. CO-AUTHORS MANAGEMENT
 // ============================================
 let coAuthorCount = 0;
 const addCoAuthorBtn = document.getElementById('addCoAuthorBtn');
@@ -182,7 +116,81 @@ window.removeCoAuthor = function(id) {
 };
 
 // ============================================
-// 5. ATTENDEE REGISTRATION
+// 4. PREVIOUS SUBMISSIONS - Conditional Fields
+// ============================================
+const previousSubmissionRadios = document.querySelectorAll('input[name="previousSubmission"]');
+const previousSubmissionDetails = document.getElementById('previousSubmissionDetails');
+const conditionalFields = document.querySelectorAll('.conditional-field');
+
+if (previousSubmissionRadios.length > 0) {
+    previousSubmissionRadios.forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            if (e.target.value === 'yes') {
+                if (previousSubmissionDetails) previousSubmissionDetails.style.display = 'grid';
+                conditionalFields.forEach(field => field.setAttribute('required', 'required'));
+            } else {
+                if (previousSubmissionDetails) previousSubmissionDetails.style.display = 'none';
+                conditionalFields.forEach(field => {
+                    field.removeAttribute('required');
+                    field.value = '';
+                });
+            }
+        });
+    });
+}
+
+// ============================================
+// 5. WORD COUNTER - Combined 350 Words Limit
+// ============================================
+const MAX_TOTAL_WORDS = 350;
+const MIN_TOTAL_WORDS = 50;
+const abstractTextareas = document.querySelectorAll('.abstract-textarea');
+const totalWordCountDisplay = document.getElementById('totalWordCount');
+
+function countWords(text) {
+    if (!text || !text.trim()) return 0;
+    return text.trim().split(/\s+/).filter(word => word.length > 0).length;
+}
+
+function updateWordCounters() {
+    let totalWords = 0;
+    
+    abstractTextareas.forEach(textarea => {
+        const words = countWords(textarea.value);
+        totalWords += words;
+        
+        const target = textarea.getAttribute('name');
+        const counter = document.querySelector(`.word-count-indicator[data-target="${target}"]`);
+        if (counter) {
+            counter.textContent = `${words} words`;
+            counter.classList.remove('warning', 'error');
+            if (words > 150) counter.classList.add('warning');
+            if (words > 200) counter.classList.add('error');
+        }
+    });
+    
+    if (totalWordCountDisplay) {
+        totalWordCountDisplay.textContent = totalWords;
+        const displayBox = totalWordCountDisplay.parentElement;
+        displayBox.classList.remove('warning', 'error');
+        
+        if (totalWords > MAX_TOTAL_WORDS) {
+            displayBox.classList.add('error');
+        } else if (totalWords > MAX_TOTAL_WORDS * 0.85) {
+            displayBox.classList.add('warning');
+        }
+    }
+    
+    return totalWords;
+}
+
+abstractTextareas.forEach(textarea => {
+    textarea.addEventListener('input', updateWordCounters);
+    textarea.addEventListener('keyup', updateWordCounters);
+});
+
+// ============================================
+// 6. ATTENDEE REGISTRATION
 // ============================================
 const attendeeForm = document.getElementById('attendeeRegistrationForm');
 
@@ -237,7 +245,7 @@ if (attendeeForm) {
 }
 
 // ============================================
-// 6. ABSTRACT SUBMISSION (FIXED)
+// 7. ABSTRACT SUBMISSION (UPDATED & CLEANED)
 // ============================================
 const abstractForm = document.getElementById('abstractSubmissionForm');
 
@@ -247,9 +255,15 @@ if (abstractForm) {
         if (!supabaseClient) return showToast('error', 'Connection Error', 'Database not connected.');
         if (!validateForm(abstractForm)) return showToast('error', 'Validation Error', 'Please fill in all required fields.');
 
-        const currentFileInput = document.getElementById('fileInput');
-        if (!currentFileInput || !currentFileInput.files.length) {
-            return showToast('error', 'File Required', 'Please upload your abstract document');
+        // ✅ NEW: Check total word count before submitting
+        const totalWords = updateWordCounters();
+        if (totalWords > MAX_TOTAL_WORDS) {
+            showToast('error', 'Word Limit Exceeded', `Your abstract has ${totalWords} words. Maximum allowed is ${MAX_TOTAL_WORDS} words.`);
+            return;
+        }
+        if (totalWords < MIN_TOTAL_WORDS) {
+            showToast('error', 'Abstract Too Short', `Your abstract has only ${totalWords} words. Please provide more details (minimum ${MIN_TOTAL_WORDS} words).`);
+            return;
         }
 
         const submitBtn = abstractForm.querySelector('.submit-btn');
@@ -257,17 +271,6 @@ if (abstractForm) {
         submitBtn.disabled = true;
 
         try {
-            const file = currentFileInput.files[0];
-            const fileExt = file.name.split('.').pop();
-            const uploadFileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
-            
-            const { error: uploadError } = await supabaseClient.storage
-                .from('abstracts')
-                .upload(uploadFileName, file, { cacheControl: '3600', upsert: false });
-
-            if (uploadError) throw uploadError;
-
-            const { data: { publicUrl } } = supabaseClient.storage.from('abstracts').getPublicUrl(uploadFileName);
             const formData = new FormData(abstractForm);
             
             const coAuthors = [];
@@ -282,25 +285,32 @@ if (abstractForm) {
                 currentCoAuthorCount++;
             }
 
-            // ✅ FIXED: Added fallbacks (|| '') to EVERY field to guarantee NO NULL values are sent
             const abstractData = {
                 title: formData.get('title') || 'Untitled',
-                track: 'General', // ← This prevents the "null value in column track" error
+                track: 'General',
                 study_type: formData.get('studyType') || 'Original Research',
                 presentation_type: formData.get('presentationType') || 'Oral Presentation',
                 keywords: formData.get('keywords') || '',
+                
+                // New fields for previous submissions
+                previous_submission: formData.get('previousSubmission') || 'no',
+                previous_conference: formData.get('previousConference') || null,
+                previous_date: formData.get('previousDate') || null,
+                
+                // Abstract content
                 background: formData.get('background') || '',
                 methods: formData.get('methods') || '',
                 results: formData.get('results') || '',
                 conclusion: formData.get('conclusion') || '',
+                
+                // Authors
                 corresponding_name: formData.get('correspondingName') || '',
                 corresponding_email: formData.get('correspondingEmail') || '',
                 corresponding_phone: formData.get('correspondingPhone') || '',
                 corresponding_university: formData.get('correspondingUniversity') || '',
                 co_authors: coAuthors.length > 0 ? coAuthors : [],
-                file_url: publicUrl,
-                file_name: file.name,
-                file_size: file.size,
+                
+                // Ethics
                 ethics_approval: formData.get('ethicsApproval') || 'Pending',
                 ethics_number: formData.get('ethicsNumber') || null,
                 conflict_of_interest: formData.get('conflictOfInterest') || 'None',
@@ -309,7 +319,6 @@ if (abstractForm) {
                 user_agent: navigator.userAgent
             };
 
-            // 🔍 DEBUG: Log the exact payload being sent to Supabase
             console.log('🔍 Abstract Payload being sent:', abstractData);
 
             const { error } = await supabaseClient.from('abstracts').insert([abstractData]);
@@ -328,14 +337,24 @@ if (abstractForm) {
             showToast('success', 'Abstract Submitted!', 'You will receive a confirmation email shortly');
             abstractForm.reset();
             
-            const preview = document.getElementById('filePreview');
-            const uploadBox = document.getElementById('fileUpload');
-            const authorsList = document.getElementById('coAuthorsList');
+            // Reset conditional fields and word counters after successful submission
+            if (previousSubmissionDetails) {
+                previousSubmissionDetails.style.display = 'none';
+                conditionalFields.forEach(field => {
+                    field.removeAttribute('required');
+                    field.value = '';
+                });
+            }
             
-            if (preview) preview.classList.remove('active');
-            if (uploadBox) uploadBox.style.display = 'block';
-            if (authorsList) authorsList.innerHTML = '';
+            abstractTextareas.forEach(textarea => {
+                const target = textarea.getAttribute('name');
+                const counter = document.querySelector(`.word-count-indicator[data-target="${target}"]`);
+                if (counter) counter.textContent = '0 words';
+            });
+            if (totalWordCountDisplay) totalWordCountDisplay.textContent = '0';
+            
             coAuthorCount = 0;
+            if (coAuthorsList) coAuthorsList.innerHTML = '';
 
         } catch (error) {
             console.error('Abstract submission error:', error);
@@ -348,7 +367,7 @@ if (abstractForm) {
 }
 
 // ============================================
-// 7. HELPER FUNCTIONS
+// 8. HELPER FUNCTIONS
 // ============================================
 async function getClientIP() {
     try {
