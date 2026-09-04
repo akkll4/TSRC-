@@ -364,6 +364,40 @@
                     <div class="form-error">Please enter the date</div>
                 </div>
             </div>
+
+            <!-- ✅ NEW: Question 2 - Publication Status -->
+<div class="form-group full-width" style="margin-top: 1.5rem;">
+    <label class="form-label">
+        Has this abstract or its core data been published in a journal or online proceedings? <span class="required">*</span>
+    </label>
+    <div class="radio-group">
+        <label class="radio-option">
+            <input type="radio" name="publicationStatus" value="no" required>
+            <span class="radio-label">No, it has not been published</span>
+        </label>
+        <label class="radio-option">
+            <input type="radio" name="publicationStatus" value="abstract_published">
+            <span class="radio-label">Yes, the abstract is published (e.g., in a conference supplement)</span>
+        </label>
+        <label class="radio-option">
+            <input type="radio" name="publicationStatus" value="full_paper_published">
+            <span class="radio-label">Yes, the full research paper is published</span>
+        </label>
+    </div>
+    <div class="form-error">Please select an option</div>
+</div>
+
+<!-- Conditional field for publication link (hidden by default) -->
+<div class="conditional-fields" id="publicationDetails" style="display: none;">
+    <div class="form-group full-width">
+        <label class="form-label">
+            Please provide the publication link or DOI <span class="required">*</span>
+        </label>
+        <input type="url" class="form-input conditional-field publication-field" name="publicationLink" placeholder="https://doi.org/... or journal URL">
+        <div class="form-hint">Enter the DOI link (e.g., https://doi.org/10.xxxx/xxxxx) or direct journal URL</div>
+        <div class="form-error">Please enter a valid publication link or DOI</div>
+    </div>
+</div>
         </div>
     </div>
 
